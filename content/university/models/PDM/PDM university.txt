@@ -1,0 +1,89 @@
+// Use this full code in dbdiagram.io
+// University Database Model v2.0
+
+Table Faculties {
+  id int [pk, increment]
+  name varchar [not null]
+}
+
+Table Careers {
+  id int [pk, increment]
+  name varchar [not null]
+  faculty_id int [ref: > Faculties.id]
+}
+
+Table Courses {
+  id int [pk, increment]
+  name varchar [not null]
+  faculty_id int [ref: > Faculties.id]
+}
+
+Table Schedules {
+  id int [pk, increment]
+  day varchar [not null]
+  start_time time [not null] 
+  end_time time [not null]   
+}
+
+Table Classrooms {
+  id int [pk, increment]
+  name varchar [not null]
+  building_id int [ref: > Buildings.id]
+}
+
+Table Buildings {
+  id int [pk, increment]
+  name varchar [not null]
+}
+
+Table Course_Schedules {
+  id int [pk, increment]
+  course_id int [ref: > Courses.id]
+  schedule_id int [ref: > Schedules.id]
+  classroom_id int [ref: > Classrooms.id]
+  teacher_id int [ref: > Users.id] // Now links to Users table
+  capacity int
+}
+
+Table Course_Careers {
+  course_id int [ref: > Courses.id]
+  career_id int [ref: > Careers.id]
+  curriculum_semester int
+  
+  Indexes {
+    (course_id, career_id) [pk]
+  }
+}
+
+Table Roles {
+  id int [pk, increment]
+  name varchar [not null]
+}
+
+Table Users {
+  id int [pk, increment]
+  first_name varchar [not null]
+  last_name varchar [not null]
+  role_id int [ref: > Roles.id]
+}
+
+Table Student_Careers {
+  career_id int [ref: > Careers.id]
+  user_id int [ref: > Users.id]
+  current_semester int
+  
+  Indexes {
+    (career_id, user_id) [pk]
+  }
+}
+
+Table Student_Courses {
+  course_schedule_id int [ref: > Course_Schedules.id]
+  user_id int [ref: > Users.id]
+  
+  Indexes {
+    (course_schedule_id, user_id) [pk]
+  }
+}
+
+codigo dbdiagram.io

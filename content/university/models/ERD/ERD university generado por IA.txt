@@ -1,0 +1,70 @@
+graph ER {
+    layout=neato;
+    overlap=false;
+    sep="+20";
+    splines=true;
+    node [fontname="Arial", fontsize=10];
+
+    // --- ESTILOS ---
+    node [shape=box, style=filled, color="#1565c0", fillcolor="#e3f2fd"]; // Entidades
+    Faculties; Careers; Courses; Users; Roles; Buildings; Classrooms; Schedules;
+
+    node [shape=ellipse, style=filled, color="#666666", fillcolor="#ffffff"]; // Atributos
+    
+    // Atributos Faculties
+    f_id [label=<<u>id</u>>]; f_n [label="name"];
+    Faculties -- {f_id f_n};
+
+    // Atributos Careers
+    ca_id [label=<<u>id</u>>]; ca_n [label="name"];
+    Careers -- {ca_id ca_n};
+
+    // Atributos Courses
+    co_id [label=<<u>id</u>>]; co_n [label="name"];
+    Courses -- {co_id co_n};
+
+    // Atributos Users
+    u_id [label=<<u>id</u>>]; u_fn [label="first_name"]; u_ln [label="last_name"];
+    Users -- {u_id u_fn u_ln};
+
+    // Atributos Classrooms/Buildings
+    cl_id [label=<<u>id</u>>]; cl_n [label="name"];
+    Classrooms -- {cl_id cl_n};
+    b_id [label=<<u>id</u>>]; b_n [label="name"];
+    Buildings -- {b_id b_n};
+
+    // Atributos Schedules
+    s_id [label=<<u>id</u>>]; s_d [label="day"]; s_st [label="start_time"]; s_et [label="end_time"];
+    Schedules -- {s_id s_d s_st s_et};
+
+    // --- RELACIONES (Rombos) ---
+    node [shape=diamond, style=filled, color="#7b1fa2", fillcolor="#f3e5f5"];
+    
+    offers1 [label="Offers"];
+    offers2 [label="Offers"];
+    belongs [label="Belongs"];
+    includes [label="Includes"];
+    contains [label="Contains"];
+    assigns [label="Assigns"];
+    enrolls [label="Enrolls"];
+    takes [label="Takes"];
+    has [label="Has"];
+
+    // --- CONEXIONES ---
+    Faculties -- offers1 [label="1"]; offers1 -- Careers [label="N"];
+    Faculties -- offers2 [label="1"]; offers2 -- Courses [label="N"];
+    
+    Buildings -- contains [label="1"]; contains -- Classrooms [label="N"];
+    
+    Roles -- belongs [label="1"]; belongs -- Users [label="N"];
+    
+    Careers -- includes [label="N"]; includes -- Courses [label="M"];
+    
+    Users -- enrolls [label="N"]; enrolls -- Careers [label="M"];
+    Users -- takes [label="N"]; takes -- Courses [label="M"];
+    
+    Courses -- assigns [label="1"]; assigns -- Classrooms [label="N"];
+    Courses -- has [label="N"]; has -- Schedules [label="M"];
+}
+
+codigo de graphviz generado por IA

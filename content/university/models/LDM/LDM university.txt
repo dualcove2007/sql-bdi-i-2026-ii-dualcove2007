@@ -1,0 +1,95 @@
+erDiagram
+    FACULTIES ||--o{ PROGRAMS : "offers"
+    FACULTIES ||--o{ COURSES : "offers"
+    BUILDINGS ||--o{ CLASSROOMS : "contains"
+    ROLES ||--o{ USERS : "assigned_to"
+    
+    PROGRAMS ||--o{ COURSES_PROGRAMS : "mapped_in"
+    COURSES ||--o{ COURSES_PROGRAMS : "part_of"
+    
+    USERS ||--o{ PROGRAMS_STUDENTS : "enrolled_in"
+    PROGRAMS ||--o{ PROGRAMS_STUDENTS : "belongs_to"
+    
+    COURSES ||--o{ COURSES_CALENDAR : "has_instances"
+    SCHEDULES ||--o{ COURSES_CALENDAR : "defines_time"
+    CLASSROOMS ||--o{ COURSES_CALENDAR : "is_held_in"
+    
+    COURSES_CALENDAR ||--o{ COURSES_STUDENTS : "attended_by"
+    USERS ||--o{ COURSES_STUDENTS : "registers"
+
+    FACULTIES {
+        int faculty_id PK
+        string name
+    }
+
+    PROGRAMS {
+        int program_id PK
+        string name
+        int faculty_id FK
+    }
+
+    COURSES {
+        int course_id PK
+        string name
+        int faculty_id FK
+    }
+
+    USERS {
+        int user_id PK
+        string name
+        string last_name
+        int semester
+        int rol_id FK
+    }
+
+    ROLES {
+        int rol_id PK
+        string name
+    }
+
+    BUILDINGS {
+        int building_id PK
+        string name
+    }
+
+    CLASSROOMS {
+        int classroom_id PK
+        string name
+        int building_id FK
+    }
+
+    SCHEDULES {
+        int schedule_id PK
+        string day
+        string start_time
+        string end_time
+    }
+
+    COURSES_CALENDAR {
+        int course_calendar_id PK
+        string quota
+        int course_id FK
+        int classroom_id FK
+        int schedule_id FK
+    }
+
+    COURSES_PROGRAMS {
+        int course_program_id PK
+        int semester
+        int course_id FK
+        int program_id FK
+    }
+
+    PROGRAMS_STUDENTS {
+        int program_student_id PK
+        int program_id FK
+        int user_id FK
+    }
+
+    COURSES_STUDENTS {
+        int course_student_id PK
+        int course_calendar FK
+        int user_id FK
+    }
+
+código de mermaid.live
